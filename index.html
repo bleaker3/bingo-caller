@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bingo Caller</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>Bingo Caller</h1>
+    </header>
+
+    <main>
+        <section class="current-section" aria-labelledby="currentLabel">
+            <h2 id="currentLabel" class="visually-hidden">Current Call</h2>
+            <div id="currentCall" class="current-call" role="status" aria-live="polite" aria-atomic="true">
+                <!-- Letter + Number displayed here -->
+                <span class="call-letter" aria-hidden="true"></span>
+                <span class="call-number" aria-hidden="true"></span>
+            </div>
+
+            <div class="controls">
+                <div class="buttons-row" role="group" aria-label="Playback controls">
+                    <button id="startBtn" type="button">Start</button>
+                    <button id="nextBtn" type="button">Next</button>
+                    <button id="resetBtn" type="button">Reset</button>
+                </div>
+
+                <div class="autoplay-voice-row">
+                    <div class="autoplay-controls" role="group" aria-label="Autoplay controls">
+                        <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
+                        <label for="intervalSelect">Interval</label>
+                        <select id="intervalSelect" name="interval">
+                            <option value="3000">3s</option>
+                            <option value="5000" selected>5s</option>
+                            <option value="8000">8s</option>
+                            <option value="10000">10s</option>
+                            <option value="15000">15s</option>
+                        </select>
+                    </div>
+
+                    <div class="voice-fullscreen" role="group" aria-label="Voice and display">
+                        <input type="checkbox" id="voiceToggle" name="voiceToggle" />
+                        <label for="voiceToggle">Voice</label>
+
+                        <button id="fullscreenBtn" type="button">Fullscreen</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panels">
+            <div class="panel called-numbers">
+                <h3>Called Numbers</h3>
+                <ul id="calledList" aria-live="polite" aria-label="Called numbers" class="called-list">
+                    <!-- Most recent calls should be inserted at the top by app.js -->
+                </ul>
+            </div>
+
+            <div class="panel bingo-panel">
+                <h3>B I N G O</h3>
+                <div id="bingoGrid" class="bingo-grid" role="grid" aria-label="Bingo grid">
+                    <!-- 75-ball Bingo grid: numbers 1–75 with data-letter -->
+                    <button type="button" class="bingo-cell" data-number="1" data-letter="B" aria-pressed="false">1</button>
+                    <button type="button" class="bingo-cell" data-number="2" data-letter="B" aria-pressed="false">2</button>
+                    <button type="button" class="bingo-cell" data-number="3" data-letter="B" aria-pressed="false">3</button>
+                    <button type="button" class="bingo-cell" data-number="4" data-letter="B" aria-pressed="false">4</button>
+                    <button type="button" class="bingo-cell" data-number="5" data-letter="B" aria-pressed="false">5</button>
+                    <button type="button" class="bingo-cell" data-number="6" data-letter="B" aria-pressed="false">6</button>
+                    <button type="button" class="bingo-cell" data-number="7" data-letter="B" aria-pressed="false">7</button>
+                    <button type="button" class="bingo-cell" data-number="8" data-letter="B" aria-pressed="false">8</button>
+                    <button type="button" class="bingo-cell" data-number="9" data-letter="B" aria-pressed="false">9</button>
+                    <button type="button" class="bingo-cell" data-number="10" data-letter="B" aria-pressed="false">10</button>
+                    <button type="button" class="bingo-cell" data-number="11" data-letter="B" aria-pressed="false">11</button>
+                    <button type="button" class="bingo-cell" data-number="12" data-letter="B" aria-pressed="false">12</button>
+                    <button type="button" class="bingo-cell" data-number="13" data-letter="B" aria-pressed="false">13</button>
+                    <button type="button" class="bingo-cell" data-number="14" data-letter="B" aria-pressed="false">14</button>
+                    <button type="button" class="bingo-cell" data-number="15" data-letter="B" aria-pressed="false">15</button>
+
+                    <button type="button" class="bingo-cell" data-number="16" data-letter="I" aria-pressed="false">16</button>
+                    <button type="button" class="bingo-cell" data-number="17" data-letter="I" aria-pressed="false">17</button>
+                    <button type="button" class="bingo-cell" data-number="18" data-letter="I" aria-pressed="false">18</button>
+                    <button type="button" class="bingo-cell" data-number="19" data-letter="I" aria-pressed="false">19</button>
+                    <button type="button" class="bingo-cell" data-number="20" data-letter="I" aria-pressed="false">20</button>
+                    <button type="button" class="bingo-cell" data-number="21" data-letter="I" aria-pressed="false">21</button>
+                    <button type="button" class="bingo-cell" data-number="22" data-letter="I" aria-pressed="false">22</button>
+                    <button type="button" class="bingo-cell" data-number="23" data-letter="I" aria-pressed="false">23</button>
+                    <button type="button" class="bingo-cell" data-number="24" data-letter="I" aria-pressed="false">24</button>
+                    <button type="button" class="bingo-cell" data-number="25" data-letter="I" aria-pressed="false">25</button>
+                    <button type="button" class="bingo-cell" data-number="26" data-letter="I" aria-pressed="false">26</button>
+                    <button type="button" class="bingo-cell" data-number="27" data-letter="I" aria-pressed="false">27</button>
+                    <button type="button" class="bingo-cell" data-number="28" data-letter="I" aria-pressed="false">28</button>
+                    <button type="button" class="bingo-cell" data-number="29" data-letter="I" aria-pressed="false">29</button>
+                    <button type="button" class="bingo-cell" data-number="30" data-letter="I" aria-pressed="false">30</button>
+
+                    <button type="button" class="bingo-cell" data-number="31" data-letter="N" aria-pressed="false">31</button>
+                    <button type="button" class="bingo-cell" data-number="32" data-letter="N" aria-pressed="false">32</button>
+                    <button type="button" class="bingo-cell" data-number="33" data-letter="N" aria-pressed="false">33</button>
+                    <button type="button" class="bingo-cell" data-number="34" data-letter="N" aria-pressed="false">34</button>
+                    <button type="button" class="bingo-cell" data-number="35" data-letter="N" aria-pressed="false">35</button>
+                    <button type="button" class="bingo-cell" data-number="36" data-letter="N" aria-pressed="false">36</button>
+                    <button type="button" class="bingo-cell" data-number="37" data-letter="N" aria-pressed="false">37</button>
+                    <button type="button" class="bingo-cell" data-number="38" data-letter="N" aria-pressed="false">38</button>
+                    <button type="button" class="bingo-cell" data-number="39" data-letter="N" aria-pressed="false">39</button>
+                    <button type="button" class="bingo-cell" data-number="40" data-letter="N" aria-pressed="false">40</button>
+                    <button type="button" class="bingo-cell" data-number="41" data-letter="N" aria-pressed="false">41</button>
+                    <button type="button" class="bingo-cell" data-number="42" data-letter="N" aria-pressed="false">42</button>
+                    <button type="button" class="bingo-cell" data-number="43" data-letter="N" aria-pressed="false">43</button>
+                    <button type="button" class="bingo-cell" data-number="44" data-letter="N" aria-pressed="false">44</button>
+                    <button type="button" class="bingo-cell" data-number="45" data-letter="N" aria-pressed="false">45</button>
+
+                    <button type="button" class="bingo-cell" data-number="46" data-letter="G" aria-pressed="false">46</button>
+                    <button type="button" class="bingo-cell" data-number="47" data-letter="G" aria-pressed="false">47</button>
+                    <button type="button" class="bingo-cell" data-number="48" data-letter="G" aria-pressed="false">48</button>
+                    <button type="button" class="bingo-cell" data-number="49" data-letter="G" aria-pressed="false">49</button>
+                    <button type="button" class="bingo-cell" data-number="50" data-letter="G" aria-pressed="false">50</button>
+                    <button type="button" class="bingo-cell" data-number="51" data-letter="G" aria-pressed="false">51</button>
+                    <button type="button" class="bingo-cell" data-number="52" data-letter="G" aria-pressed="false">52</button>
+                    <button type="button" class="bingo-cell" data-number="53" data-letter="G" aria-pressed="false">53</button>
+                    <button type="button" class="bingo-cell" data-number="54" data-letter="G" aria-pressed="false">54</button>
+                    <button type="button" class="bingo-cell" data-number="55" data-letter="G" aria-pressed="false">55</button>
+                    <button type="button" class="bingo-cell" data-number="56" data-letter="G" aria-pressed="false">56</button>
+                    <button type="button" class="bingo-cell" data-number="57" data-letter="G" aria-pressed="false">57</button>
+                    <button type="button" class="bingo-cell" data-number="58" data-letter="G" aria-pressed="false">58</button>
+                    <button type="button" class="bingo-cell" data-number="59" data-letter="G" aria-pressed="false">59</button>
+                    <button type="button" class="bingo-cell" data-number="60" data-letter="G" aria-pressed="false">60</button>
+
+                    <button type="button" class="bingo-cell" data-number="61" data-letter="O" aria-pressed="false">61</button>
+                    <button type="button" class="bingo-cell" data-number="62" data-letter="O" aria-pressed="false">62</button>
+                    <button type="button" class="bingo-cell" data-number="63" data-letter="O" aria-pressed="false">63</button>
+                    <button type="button" class="bingo-cell" data-number="64" data-letter="O" aria-pressed="false">64</button>
+                    <button type="button" class="bingo-cell" data-number="65" data-letter="O" aria-pressed="false">65</button>
+                    <button type="button" class="bingo-cell" data-number="66" data-letter="O" aria-pressed="false">66</button>
+                    <button type="button" class="bingo-cell" data-number="67" data-letter="O" aria-pressed="false">67</button>
+                    <button type="button" class="bingo-cell" data-number="68" data-letter="O" aria-pressed="false">68</button>
+                    <button type="button" class="bingo-cell" data-number="69" data-letter="O" aria-pressed="false">69</button>
+                    <button type="button" class="bingo-cell" data-number="70" data-letter="O" aria-pressed="false">70</button>
+                    <button type="button" class="bingo-cell" data-number="71" data-letter="O" aria-pressed="false">71</button>
+                    <button type="button" class="bingo-cell" data-number="72" data-letter="O" aria-pressed="false">72</button>
+                    <button type="button" class="bingo-cell" data-number="73" data-letter="O" aria-pressed="false">73</button>
+                    <button type="button" class="bingo-cell" data-number="74" data-letter="O" aria-pressed="false">74</button>
+                    <button type="button" class="bingo-cell" data-number="75" data-letter="O" aria-pressed="false">75</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="visually-hidden">Bingo Caller application</p>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
