@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bingo Caller with Voice | Talking Bingo Caller with Sound</title>
+  <meta name="description" content="Use a bingo caller with voice to hear each number announced aloud. Talking bingo caller with autoplay, sound, and fullscreen display." />
+  <link rel="canonical" href="https://freebingocaller.com/bingo-caller-with-voice/" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+     data-ad-client="ca-pub-PLACEHOLDER"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Bingo Caller with Voice</h1>
+    <p>Run a bingo caller with voice that announces every number out loud. This talking bingo caller includes automated calling, announcer voice options, and fullscreen display for live games.</p>
+  </header>
+
+  <main>
+    <section class="current-section" aria-labelledby="currentLabel">
+      <h2 id="currentLabel" class="visually-hidden">Current Call</h2>
+      <div id="currentCall" class="current-call" role="status" aria-live="polite" aria-atomic="true">
+        <span class="call-letter" aria-hidden="true"></span>
+        <span class="call-number" aria-hidden="true"></span>
+      </div>
+
+      <div class="controls controls-bar">
+        <div class="controls-left" role="group" aria-label="Playback controls">
+          <button id="startBtn" type="button">Start</button>
+          <button id="nextBtn" type="button">Next</button>
+          <button id="resetBtn" type="button">Reset</button>
+          <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
+          <label for="intervalSelect">Interval</label>
+          <select id="intervalSelect" name="interval">
+            <option value="3000">3s</option>
+            <option value="5000">5s</option>
+            <option value="8000" selected>8s</option>
+            <option value="10000">10s</option>
+            <option value="15000">15s</option>
+          </select>
+        </div>
+
+        <div class="controls-voice" role="group" aria-label="Announcer voice controls">
+          <label class="toggle-switch" for="voiceToggle">
+            <input type="checkbox" id="voiceToggle" name="voiceToggle" />
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Announcer Voice</span>
+          </label>
+          <label for="voiceSelect" class="visually-hidden">Voice Select</label>
+          <select id="voiceSelect" name="voiceSelect"></select>
+        </div>
+
+        <div class="controls-right" role="group" aria-label="Display controls">
+          <button id="darkModeToggle" type="button" aria-pressed="false">Dark Mode</button>
+          <button id="fullscreenBtn" type="button">Fullscreen</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panels">
+      <div class="panel called-numbers">
+        <h3>Called Numbers</h3>
+        <ul id="calledList" aria-live="polite" aria-label="Called numbers" class="called-list"></ul>
+      </div>
+
+      <div class="panel bingo-panel">
+        <h3>B I N G O</h3>
+        <div id="bingoGrid" class="bingo-grid" role="grid" aria-label="Bingo grid"></div>
+      </div>
+    </section>
+
+    <section class="seo-content">
+      <h2>How the Bingo Caller with Voice Works</h2>
+      <p>This bingo caller with voice is designed to clearly announce each bingo number as it is called, making games easier to follow without constantly watching the screen. It is ideal for classrooms, senior centers, community events, and any bingo game where spoken calls improve accessibility.</p>
+      <ul>
+        <li>Click the large call area to start the game.</li>
+        <li>Enable Announcer Voice to hear each number spoken aloud.</li>
+        <li>Use Next to call numbers manually with voice.</li>
+        <li>Turn on Autoplay to create an automated bingo caller with sound.</li>
+        <li>Use Fullscreen mode for TVs, projectors, and large displays.</li>
+      </ul>
+      <p>The talking bingo caller automatically tracks all called numbers and highlights them on the 75 ball grid so players can visually confirm each call.</p>
+
+      <h2>Features of the Talking Bingo Caller</h2>
+      <p>This talking bingo caller includes clear announcer voice playback, adjustable autoplay speeds, and a full 75 ball bingo grid. The bingo announcer voice helps reduce missed calls and keeps games moving smoothly.</p>
+      <p>As an automated bingo caller with sound, it runs entirely in your browser with no downloads or setup required. Voice settings can be turned on or off at any time and are remembered for future games.</p>
+
+      <h2>Looking for Other Bingo Caller Options?</h2>
+      <p>You can also try our <a href="/free-bingo-caller/">Free Bingo Caller</a> for a simplified experience, or use the <a href="/online-bingo-caller/">Online Bingo Caller</a> if you prefer a general web-based bingo calling tool.</p>
+
+      <h2>Bingo Caller with Voice FAQ</h2>
+      <h3>Does this bingo caller have voice announcements?</h3>
+      <p>Yes. This bingo caller includes announcer voice playback that reads each bingo number aloud.</p>
+      <h3>Is this a talking bingo caller?</h3>
+      <p>Yes. When voice is enabled, each number is spoken clearly as it is called.</p>
+      <h3>Can I automate bingo calling with sound?</h3>
+      <p>Yes. Enable Autoplay and Announcer Voice to create an automated bingo caller with sound.</p>
+      <h3>Can I change or turn off the voice?</h3>
+      <p>Yes. You can turn the bingo announcer voice on or off at any time.</p>
+      <h3>Does it work on TVs or projectors?</h3>
+      <p>Yes. Fullscreen mode works well on large displays and shared screens.</p>
+
+      <p>If you don’t need voice announcements, you can also use the <a href="/free-bingo-caller/">Free Bingo Caller</a> for silent number calling.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Bingo Caller with Voice is a browser-based bingo calling tool that announces numbers aloud for live bingo games and events.</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
