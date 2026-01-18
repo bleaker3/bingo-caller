@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Random Bingo Caller | Fair & Random Bingo Number Caller</title>
+  <meta name="description" content="Use a random bingo caller to generate fair, unbiased bingo numbers. Free online bingo caller with random selection, voice, and autoplay." />
+  <link rel="canonical" href="https://freebingocaller.com/random-bingo-caller/" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+     data-ad-client="ca-pub-PLACEHOLDER"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Random Bingo Caller</h1>
+    <p>Run a random bingo caller that selects bingo numbers fairly and unpredictably. Designed to ensure unbiased gameplay for any bingo event.</p>
+  </header>
+
+  <main>
+    <section class="current-section" aria-labelledby="currentLabel">
+      <h2 id="currentLabel" class="visually-hidden">Current Call</h2>
+      <div id="currentCall" class="current-call" role="status" aria-live="polite" aria-atomic="true">
+        <span class="call-letter" aria-hidden="true"></span>
+        <span class="call-number" aria-hidden="true"></span>
+      </div>
+
+      <div class="controls controls-bar">
+        <div class="controls-left" role="group" aria-label="Playback controls">
+          <button id="startBtn" type="button">Start</button>
+          <button id="nextBtn" type="button">Next</button>
+          <button id="resetBtn" type="button">Reset</button>
+          <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
+          <label for="intervalSelect">Interval</label>
+          <select id="intervalSelect" name="interval">
+            <option value="3000">3s</option>
+            <option value="5000">5s</option>
+            <option value="8000" selected>8s</option>
+            <option value="10000">10s</option>
+            <option value="15000">15s</option>
+          </select>
+        </div>
+
+        <div class="controls-voice" role="group" aria-label="Announcer voice controls">
+          <label class="toggle-switch" for="voiceToggle">
+            <input type="checkbox" id="voiceToggle" name="voiceToggle" />
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Announcer Voice</span>
+          </label>
+          <label for="voiceSelect" class="visually-hidden">Voice Select</label>
+          <select id="voiceSelect" name="voiceSelect"></select>
+        </div>
+
+        <div class="controls-right" role="group" aria-label="Display controls">
+          <button id="darkModeToggle" type="button" aria-pressed="false">Dark Mode</button>
+          <button id="fullscreenBtn" type="button">Fullscreen</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panels">
+      <div class="panel called-numbers">
+        <h3>Called Numbers</h3>
+        <ul id="calledList" aria-live="polite" aria-label="Called numbers" class="called-list"></ul>
+      </div>
+
+      <div class="panel bingo-panel">
+        <h3>B I N G O</h3>
+        <div id="bingoGrid" class="bingo-grid" role="grid" aria-label="Bingo grid"></div>
+      </div>
+    </section>
+
+    <section class="seo-content">
+      <h2>What Is a Random Bingo Caller?</h2>
+      <p>A random bingo caller is a tool that selects bingo numbers using a randomized process to ensure fair and unbiased gameplay. Each number is drawn only once per game and cannot be predicted or repeated.</p>
+      <p>This online random bingo caller replaces traditional physical cages while maintaining the same level of randomness and fairness, making it ideal for live games, events, and group play.</p>
+
+      <h2>How the Random Bingo Caller Works</h2>
+      <p>The random bingo caller automatically selects bingo numbers from a shuffled pool, ensuring that every game is fair and unpredictable. No manual input is required to maintain randomness.</p>
+      <ul>
+        <li>Click the large call area to draw a random bingo number.</li>
+        <li>Use Next to continue calling numbers one at a time.</li>
+        <li>Enable Autoplay to generate random numbers automatically.</li>
+        <li>Turn on Announcer Voice to hear each random number spoken aloud.</li>
+        <li>Use Fullscreen mode for TVs, projectors, and shared displays.</li>
+      </ul>
+      <p>All selected numbers are tracked automatically and highlighted on the 75 ball grid so players can verify each call.</p>
+
+      <h2>Features of This Random Bingo Caller</h2>
+      <p>This random bingo caller includes true random number selection, optional voice announcements, adjustable autoplay speeds, and a full 75 ball bingo grid. The built in tracking helps prevent duplicate calls and ensures transparency during the game.</p>
+      <p>As a free online bingo caller, it runs directly in your browser with no downloads, signups, or installations required.</p>
+
+      <h2>Related Bingo Caller Tools</h2>
+      <p>Different bingo games may require different calling features. The <a href="/free-bingo-caller/">free online bingo caller</a> works well for general use, the <a href="/bingo-caller-with-voice/">bingo caller with voice</a> helps players hear each number clearly, and the <a href="/autoplay-bingo-caller/">automatic bingo caller</a> allows hands free random calling.</p>
+
+      <h2>Start a Random Bingo Game</h2>
+      <p>Visit the <a href="/free-bingo-caller/">Free Bingo Caller</a> tool to start a random bingo game instantly using your browser.</p>
+
+      <h2>Random Bingo Caller FAQ</h2>
+      <h3>Is this bingo caller truly random?</h3>
+      <p>Yes. Bingo numbers are selected randomly from a shuffled pool and cannot be predicted.</p>
+      <h3>Can numbers repeat during a game?</h3>
+      <p>No. Each number is only called once per game.</p>
+      <h3>Is this random bingo caller free to use?</h3>
+      <p>Yes. This is a free online bingo caller with no signup required.</p>
+      <h3>Can random number calling be automated?</h3>
+      <p>Yes. Autoplay allows random numbers to be called automatically.</p>
+      <h3>Does it keep track of called numbers?</h3>
+      <p>Yes. All called numbers are highlighted on the grid for transparency.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Random Bingo Caller is a browser-based bingo calling tool designed to randomly select, announce, and track bingo numbers for fair gameplay.</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
