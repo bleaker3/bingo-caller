@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Online Bingo Caller | Web-Based Bingo Caller with Voice & Autoplay</title>
+  <meta name="description" content="Use an online bingo caller to run bingo games in your browser. Free web-based bingo caller with voice, autoplay, and fullscreen display." />
+  <link rel="canonical" href="https://freebingocaller.com/online-bingo-caller/" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+     data-ad-client="ca-pub-PLACEHOLDER"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Online Bingo Caller</h1>
+    <p>Run a fast, reliable online bingo caller directly in your browser. This web-based bingo caller includes voice announcements, autoplay, and fullscreen mode with no downloads or setup required.</p>
+  </header>
+
+  <main>
+    <section class="current-section" aria-labelledby="currentLabel">
+      <h2 id="currentLabel" class="visually-hidden">Current Call</h2>
+      <div id="currentCall" class="current-call" role="status" aria-live="polite" aria-atomic="true">
+        <span class="call-letter" aria-hidden="true"></span>
+        <span class="call-number" aria-hidden="true"></span>
+      </div>
+
+      <div class="controls controls-bar">
+        <div class="controls-left" role="group" aria-label="Playback controls">
+          <button id="startBtn" type="button">Start</button>
+          <button id="nextBtn" type="button">Next</button>
+          <button id="resetBtn" type="button">Reset</button>
+          <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
+          <label for="intervalSelect">Interval</label>
+          <select id="intervalSelect" name="interval">
+            <option value="3000">3s</option>
+            <option value="5000">5s</option>
+            <option value="8000" selected>8s</option>
+            <option value="10000">10s</option>
+            <option value="15000">15s</option>
+          </select>
+        </div>
+
+        <div class="controls-voice" role="group" aria-label="Announcer voice controls">
+          <label class="toggle-switch" for="voiceToggle">
+            <input type="checkbox" id="voiceToggle" name="voiceToggle" />
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Announcer Voice</span>
+          </label>
+          <label for="voiceSelect" class="visually-hidden">Voice Select</label>
+          <select id="voiceSelect" name="voiceSelect"></select>
+        </div>
+
+        <div class="controls-right" role="group" aria-label="Display controls">
+          <button id="darkModeToggle" type="button" aria-pressed="false">Dark Mode</button>
+          <button id="fullscreenBtn" type="button">Fullscreen</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panels">
+      <div class="panel called-numbers">
+        <h3>Called Numbers</h3>
+        <ul id="calledList" aria-live="polite" aria-label="Called numbers" class="called-list"></ul>
+      </div>
+
+      <div class="panel bingo-panel">
+        <h3>B I N G O</h3>
+        <div id="bingoGrid" class="bingo-grid" role="grid" aria-label="Bingo grid"></div>
+      </div>
+    </section>
+
+    <section class="seo-content">
+      <h2>How to Use This Online Bingo Caller</h2>
+      <p>This online bingo caller lets you run a complete bingo game using a web-based interface that works on any modern device. The large call display and clear layout make it easy for players to follow along during live bingo sessions.</p>
+      <ul>
+        <li>Click the large call area to start calling bingo numbers.</li>
+        <li>Use Next to call numbers manually at your own pace.</li>
+        <li>Enable Autoplay for automatic bingo number calling.</li>
+        <li>Turn on Announcer Voice to hear each number spoken aloud.</li>
+        <li>Use Fullscreen mode for TVs, projectors, and shared displays.</li>
+      </ul>
+      <p>The online bingo number caller automatically tracks all called numbers and highlights them on the 75 ball grid. Select Reset at any time to reshuffle and begin a new bingo game.</p>
+
+      <h2>Features of the Web-Based Bingo Caller</h2>
+      <p>This web-based bingo caller includes optional voice announcements, adjustable autoplay speeds, and a full 75 ball bingo grid. It runs entirely online in your browser with no downloads, installs, or signups required.</p>
+      <p>The bingo caller online free experience is optimized for desktop, tablet, and mobile devices, making it ideal for classrooms, senior centers, community halls, and home bingo games.</p>
+
+      <h2>Looking for a Free Bingo Caller?</h2>
+      <p>If you’re looking for a dedicated free bingo caller experience, visit our <a href="/free-bingo-caller/">Free Bingo Caller</a> page to start a game instantly with the same voice, autoplay, and fullscreen features.</p>
+
+      <h2>Online Bingo Caller FAQ</h2>
+      <h3>Is this an online bingo caller?</h3>
+      <p>Yes. This bingo caller runs entirely online using a web-based interface and does not require downloads or installation.</p>
+      <h3>Is the bingo caller free to use?</h3>
+      <p>Yes. This is a bingo caller online free to use with no signup required.</p>
+      <h3>Does the online bingo caller support voice announcements?</h3>
+      <p>Yes. You can enable Announcer Voice to have each bingo number spoken aloud.</p>
+      <h3>Can I use this on a TV or projector?</h3>
+      <p>Yes. Fullscreen mode makes this online bingo caller ideal for large displays.</p>
+      <h3>Does it work for classrooms or seniors?</h3>
+      <p>Yes. The interface is designed for clarity, readability, and ease of use.</p>
+
+      <p>You can also explore our <a href="/free-bingo-caller/">Free Bingo Caller</a> for a simplified bingo calling experience.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Online Bingo Caller is a browser-based bingo calling tool designed for live bingo games and events.</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
