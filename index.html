@@ -20,32 +20,35 @@
                 <span class="call-number" aria-hidden="true"></span>
             </div>
 
-            <div class="controls">
-                <div class="buttons-row" role="group" aria-label="Playback controls">
+            <div class="controls controls-bar">
+                <div class="controls-left" role="group" aria-label="Playback controls">
                     <button id="startBtn" type="button">Start</button>
                     <button id="nextBtn" type="button">Next</button>
                     <button id="resetBtn" type="button">Reset</button>
+                    <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
+                    <label for="intervalSelect">Interval</label>
+                    <select id="intervalSelect" name="interval">
+                        <option value="3000">3s</option>
+                        <option value="5000">5s</option>
+                        <option value="8000" selected>8s</option>
+                        <option value="10000">10s</option>
+                        <option value="15000">15s</option>
+                    </select>
                 </div>
 
-                <div class="autoplay-voice-row">
-                    <div class="autoplay-controls" role="group" aria-label="Autoplay controls">
-                        <button id="autoplayBtn" type="button" aria-pressed="false">Autoplay</button>
-                        <label for="intervalSelect">Interval</label>
-                        <select id="intervalSelect" name="interval">
-                            <option value="3000">3s</option>
-                            <option value="5000" selected>5s</option>
-                            <option value="8000">8s</option>
-                            <option value="10000">10s</option>
-                            <option value="15000">15s</option>
-                        </select>
-                    </div>
-
-                    <div class="voice-fullscreen" role="group" aria-label="Voice and display">
+                <div class="controls-voice" role="group" aria-label="Announcer voice controls">
+                    <label class="toggle-switch" for="voiceToggle">
                         <input type="checkbox" id="voiceToggle" name="voiceToggle" />
-                        <label for="voiceToggle">Voice</label>
+                        <span class="toggle-track" aria-hidden="true"></span>
+                        <span class="toggle-label">Announcer Voice</span>
+                    </label>
+                    <label for="voiceSelect" class="visually-hidden">Voice Select</label>
+                    <select id="voiceSelect" name="voiceSelect"></select>
+                </div>
 
-                        <button id="fullscreenBtn" type="button">Fullscreen</button>
-                    </div>
+                <div class="controls-right" role="group" aria-label="Display controls">
+                    <button id="darkModeToggle" type="button" aria-pressed="false">Dark Mode</button>
+                    <button id="fullscreenBtn" type="button">Fullscreen</button>
                 </div>
             </div>
         </section>

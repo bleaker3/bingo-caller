@@ -2,6 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "bingoCallerState_v1";
+  const THEME_KEY = "bingoCallerTheme_v1";
+  const VOICE_KEY = "preferredVoiceName";
 
   const LETTERS = [
     { letter: "B", min: 1, max: 15 },
@@ -12,17 +14,19 @@
   ];
 
   /** DOM */
-  let startBtn, nextBtn, resetBtn, fullscreenBtn, autoplayBtn;
-  let intervalSelect, voiceToggle;
-  let currentCallEl, calledListEl, bingoGridEl;
+  let startBtn, nextBtn, resetBtn, fullscreenBtn, autoplayBtn, darkModeToggle;
+  let intervalSelect, voiceToggle, voiceSelect;
+  let currentCallEl, calledListEl, bingoGridEl, remainingEl;
 
   /** State */
   let deck = [];
   let deckIndex = 0;
   let called = []; // array of numbers in called order
   let current = null; // {letter, number}
-  let autoplayTimer = null;
+  let autoplayTimerId = null;
   let voiceEnabled = false;
+  let voices = [];
+  let selectedVoiceName = "";
 
   function $(id) {
     return document.getElementById(id);
@@ -46,15 +50,31 @@
     if (!voiceEnabled) return;
     if (!("speechSynthesis" in window)) return;
 
-    const letterNameMap = { B: "B", I: "I", N: "N", G: "G", O: "O" };
-    const phrase = `${letterNameMap[call.letter] ?? call.letter} ${call.number}`;
-
     // Cancel any queued speech to keep it snappy
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(phrase);
-    utter.rate = 1;
-    utter.pitch = 1;
-    window.speechSynthesis.speak(utter);
+    const letter = call.letter;
+    const numberWords = numberToWords(call.number);
+    const voice = getSelectedVoice();
+
+    const utterLetter = new SpeechSynthesisUtterance(letter);
+    utterLetter.rate = 0.95;
+    utterLetter.pitch = 1.05;
+    utterLetter.volume = 1.0;
+    if (voice) utterLetter.voice = voice;
+
+    const utterNumber = new SpeechSynthesisUtterance(numberWords);
+    utterNumber.rate = 0.95;
+    utterNumber.pitch = 1.05;
+    utterNumber.volume = 1.0;
+    if (voice) utterNumber.voice = voice;
+
+    utterLetter.onend = () => {
+      setTimeout(() => {
+        window.speechSynthesis.speak(utterNumber);
+      }, 180);
+    };
+
+    window.speechSynthesis.speak(utterLetter);
   }
 
   function saveState() {
@@ -66,6 +86,70 @@
       voiceEnabled,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function numberToWords(n) {
+    const ones = [
+      "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+      "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+      "seventeen", "eighteen", "nineteen",
+    ];
+    const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy"];
+    if (n < 20) return ones[n];
+    const t = Math.floor(n / 10);
+    const o = n % 10;
+    if (o === 0) return tens[t];
+    return `${tens[t]}-${ones[o]}`;
+  }
+
+  function getSelectedVoice() {
+    if (!voices.length) return null;
+    if (selectedVoiceName) {
+      const match = voices.find((v) => v.name === selectedVoiceName);
+      if (match) return match;
+    }
+    return null;
+  }
+
+  function pickDefaultVoice() {
+    const englishVoices = voices.filter((v) => /^en/i.test(v.lang));
+    const googleUs = englishVoices.find((v) => /google us english/i.test(v.name));
+    if (googleUs) return googleUs.name;
+
+    const natural = englishVoices.find((v) => /natural|neural|online/i.test(v.name));
+    if (natural) return natural.name;
+
+    const named = englishVoices.find((v) => /aria|jenny|samantha|google/i.test(v.name));
+    if (named) return named.name;
+
+    if (englishVoices.length) return englishVoices[0].name;
+    return voices[0]?.name ?? "";
+  }
+
+  function initVoices() {
+    voices = window.speechSynthesis.getVoices() || [];
+    if (!voices.length || !voiceSelect) return;
+
+    voiceSelect.innerHTML = "";
+    for (const v of voices) {
+      const opt = document.createElement("option");
+      opt.value = v.name;
+      opt.textContent = `${v.name} (${v.lang})`;
+      voiceSelect.appendChild(opt);
+    }
+
+    const saved = localStorage.getItem(VOICE_KEY);
+    if (saved && voices.some((v) => v.name === saved)) {
+      selectedVoiceName = saved;
+    } else {
+      selectedVoiceName = pickDefaultVoice();
+      if (selectedVoiceName) {
+        localStorage.setItem(VOICE_KEY, selectedVoiceName);
+      }
+    }
+    if (selectedVoiceName) {
+      voiceSelect.value = selectedVoiceName;
+    }
   }
 
   function loadState() {
@@ -87,6 +171,19 @@
 
   function clearState() {
     localStorage.removeItem(STORAGE_KEY);
+  }
+
+  function applyTheme(theme) {
+    const isDark = theme === "dark";
+    document.documentElement.classList.toggle("theme-dark", isDark);
+    document.documentElement.classList.toggle("theme-light", !isDark);
+    darkModeToggle.setAttribute("aria-pressed", String(isDark));
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    const theme = saved === "dark" || saved === "light" ? saved : "light";
+    applyTheme(theme);
   }
 
   function buildGrid() {
@@ -138,8 +235,9 @@
     // Most recent on top
     calledListEl.innerHTML = "";
     const reversed = [...called].reverse();
+    const visible = reversed.slice(0, 5);
 
-    if (reversed.length === 0) {
+    if (visible.length === 0) {
       const empty = document.createElement("div");
       empty.className = "muted";
       empty.textContent = "No numbers called yet.";
@@ -147,7 +245,7 @@
       return;
     }
 
-    for (const n of reversed) {
+    for (const n of visible) {
       const call = numToCall(n);
       const item = document.createElement("div");
       item.className = "called-item";
@@ -157,11 +255,17 @@
   }
 
   function updateCurrentCall() {
+    const letterEl = currentCallEl.querySelector(".call-letter");
+    const numberEl = currentCallEl.querySelector(".call-number");
     if (!current) {
-      currentCallEl.textContent = "Press Start";
+      currentCallEl.classList.add("is-empty");
+      if (letterEl) letterEl.textContent = "";
+      if (numberEl) numberEl.textContent = "PRESS START";
       return;
     }
-    currentCallEl.textContent = `${current.letter}${current.number}`;
+    currentCallEl.classList.remove("is-empty");
+    if (letterEl) letterEl.textContent = current.letter;
+    if (numberEl) numberEl.textContent = String(current.number);
   }
 
   function updateUI() {
@@ -176,17 +280,40 @@
     voiceToggle.checked = voiceEnabled;
 
     // Autoplay label
-    if (autoplayTimer) {
+    if (autoplayTimerId) {
       autoplayBtn.textContent = "Stop Autoplay";
       autoplayBtn.classList.add("primary");
     } else {
       autoplayBtn.textContent = "Autoplay";
       autoplayBtn.classList.remove("primary");
     }
+
+    if (remainingEl) {
+      const remaining = Math.max(0, 75 - called.length);
+      remainingEl.textContent = `Remaining: ${remaining}`;
+    }
+
+    const canStart = deck.length !== 75 || called.length === 0;
+    currentCallEl.classList.toggle("is-clickable", canStart);
+    currentCallEl.setAttribute("role", canStart ? "button" : "status");
+    currentCallEl.setAttribute("aria-label", canStart ? "Press Start" : "Current call");
+    currentCallEl.tabIndex = canStart ? 0 : -1;
+
+    if (voiceSelect) {
+      voiceSelect.disabled = !voiceEnabled;
+      voiceSelect.classList.toggle("voice-disabled", !voiceEnabled);
+    }
+  }
+
+  function handleBallActivate() {
+    const canStart = deck.length !== 75 || called.length === 0;
+    if (!canStart) return;
+    startGame();
+    nextNumber();
   }
 
   function startGame() {
-    stopAutoplay();
+    stopAutoplayTimer();
 
     deck = shuffle(Array.from({ length: 75 }, (_, i) => i + 1));
     deckIndex = 0;
@@ -212,13 +339,13 @@
     speakCall(current);
 
     if (deckIndex >= deck.length) {
-      stopAutoplay();
+      stopAutoplayTimer();
       updateUI();
     }
   }
 
   function resetGame() {
-    stopAutoplay();
+    stopAutoplayTimer();
     deck = [];
     deckIndex = 0;
     called = [];
@@ -229,31 +356,27 @@
     updateUI();
   }
 
-  function stopAutoplay() {
-    if (autoplayTimer) {
-      clearInterval(autoplayTimer);
-      autoplayTimer = null;
+  function stopAutoplayTimer() {
+    if (autoplayTimerId) {
+      clearInterval(autoplayTimerId);
+      autoplayTimerId = null;
     }
   }
 
   function parseIntervalMs(rawValue) {
     const value = String(rawValue ?? "").trim();
-    if (!value) return 5000;
+    if (!value) return 8000;
 
     const hasSecondsSuffix = /s$/i.test(value);
     const numeric = Number.parseFloat(value.replace(/s$/i, ""));
 
-    if (!Number.isFinite(numeric)) return 5000;
+    if (!Number.isFinite(numeric)) return 8000;
     if (hasSecondsSuffix || numeric < 100) return Math.round(numeric * 1000);
     return Math.round(numeric);
   }
 
-  function toggleAutoplay(rawInterval) {
-    if (autoplayTimer) {
-      stopAutoplay();
-      updateUI();
-      return;
-    }
+  function startAutoplayTimer() {
+    if (autoplayTimerId) return;
     if (deck.length !== 75) {
       console.warn("Autoplay requires a started game.");
       updateUI();
@@ -265,11 +388,10 @@
       return;
     }
 
-    const intervalMs = parseIntervalMs(rawInterval);
-
-    autoplayTimer = setInterval(() => {
+    const intervalMs = parseIntervalMs(intervalSelect.value);
+    autoplayTimerId = setInterval(() => {
       if (deckIndex >= deck.length) {
-        stopAutoplay();
+        stopAutoplayTimer();
         updateUI();
         return;
       }
@@ -277,6 +399,21 @@
     }, intervalMs);
 
     updateUI();
+  }
+
+  function restartAutoplayTimer() {
+    if (!autoplayTimerId) return;
+    stopAutoplayTimer();
+    startAutoplayTimer();
+  }
+
+  function toggleAutoplay() {
+    if (autoplayTimerId) {
+      stopAutoplayTimer();
+      updateUI();
+      return;
+    }
+    startAutoplayTimer();
   }
 
   async function toggleFullscreen() {
@@ -294,16 +431,45 @@
     resetBtn.addEventListener("click", () => resetGame());
 
     autoplayBtn.addEventListener("click", () => {
-      toggleAutoplay(intervalSelect.value);
+      toggleAutoplay();
+    });
+
+    intervalSelect.addEventListener("change", () => {
+      if (autoplayTimerId) restartAutoplayTimer();
     });
 
     voiceToggle.addEventListener("change", () => {
       voiceEnabled = !!voiceToggle.checked;
+      if (!voiceEnabled && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
       saveState();
+      updateUI();
+    });
+
+    voiceSelect.addEventListener("change", () => {
+      selectedVoiceName = voiceSelect.value;
+      localStorage.setItem(VOICE_KEY, selectedVoiceName);
     });
 
     fullscreenBtn.addEventListener("click", () => {
       toggleFullscreen().catch(() => {});
+    });
+
+    darkModeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("theme-dark");
+      const nextTheme = isDark ? "light" : "dark";
+      localStorage.setItem(THEME_KEY, nextTheme);
+      applyTheme(nextTheme);
+    });
+
+    currentCallEl.addEventListener("click", () => handleBallActivate());
+    currentCallEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+        handleBallActivate();
+      }
     });
 
     // Keyboard shortcuts: Space = Next, R = Reset
@@ -325,18 +491,30 @@
     resetBtn = $("resetBtn");
     fullscreenBtn = $("fullscreenBtn");
     autoplayBtn = $("autoplayBtn");
+    darkModeToggle = $("darkModeToggle");
 
     intervalSelect = $("intervalSelect");
     voiceToggle = $("voiceToggle");
+    voiceSelect = $("voiceSelect");
 
     currentCallEl = $("currentCall");
     calledListEl = $("calledList");
     bingoGridEl = $("bingoGrid");
+    const controlsEl = document.querySelector(".controls");
+    if (controlsEl) {
+      remainingEl = document.getElementById("remainingCount");
+      if (!remainingEl) {
+        remainingEl = document.createElement("div");
+        remainingEl.id = "remainingCount";
+        remainingEl.className = "remaining-count";
+        controlsEl.insertAdjacentElement("afterend", remainingEl);
+      }
+    }
 
     // If any element missing, fail loudly in console
     const required = [
       startBtn, nextBtn, resetBtn, fullscreenBtn, autoplayBtn,
-      intervalSelect, voiceToggle, currentCallEl, calledListEl, bingoGridEl,
+      darkModeToggle, intervalSelect, voiceToggle, voiceSelect, currentCallEl, calledListEl, bingoGridEl,
     ];
     if (required.some((x) => !x)) {
       console.error("Missing required elements. Check index.html IDs.");
@@ -348,6 +526,12 @@
     // Restore prior state if available
     loadState();
     updateUI();
+    initTheme();
+
+    initVoices();
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => initVoices();
+    }
 
     bindEvents();
 
